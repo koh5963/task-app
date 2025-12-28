@@ -13,6 +13,7 @@ coverage.*
 profile.cov
 go.work
 go.work.sum
+tmp*
 
 # ====================
 # Node / Frontend (Vite)
