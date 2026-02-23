@@ -19,17 +19,34 @@ This Application is Web Application.
 - State management: minimal (no Redux in v0.1.0).
 
 ## Detailed Specifications
+This is minimum specifications.
 
 ### User Login form 
-- Login by Usernames and Passwords.
+- Login by Email and Passwords.
 - Login information is managed by JWT tokens.
-- We will use Supabase for JWT Authorization.
-- Login form has two text boxes for UserName and Password, one button for login.
+- Supabase is used for Authentication.
+- Login form has two text boxes for Email and Password, one button for login.
 - The text box for password masks user inputs.
 
 #### Non-Goals
+- User registration.
 - Password reset.
 - Email verification.
 - Role based access control.
 - Production-level security considerations.
 
+---
+
+### Task Management form
+- Tasks registration.
+- Tasks update.
+- Tasks delete.
+- Tasks view in list.
+
+#### Task Attributes
+- Title
+- Description (optional)
+- Status (TODO / DOING / DONE)
+
+#### Notes
+- Split into multiple components within the same page, not across different pages.
