@@ -5,6 +5,11 @@ services:
       - "8080:8080"
     volumes:
       - ./backend:/app
+    environment:
+      DATABASE_URL: postgres://${USER_NAME}:${USER_PASS}@db:5432/${DB_NAME}?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
 
   frontend:
     build: ./frontend
@@ -15,3 +20,25 @@ services:
       - /app/node_modules
     depends_on:
       - backend
+  
+  db:
+    image: postgres:18
+    volumes: 
+      - db_data:/var/lib/postgresql
+      - ./db/init:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${USER_NAME}
+      POSTGRES_PASSWORD: ${USER_PASS}
+      POSTGRES_DB: ${DB_NAME}
+      PGDATA: /var/lib/postgresql/18/docker
+    healthcheck:
+      # MVP中は直書き推奨（.envに自信あるなら ${...} でも可）
+      test: ["CMD-SHELL", "pg_isready -U ${USER_NAME} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db_data:
