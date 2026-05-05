@@ -3,6 +3,7 @@ import './App.css'
 import LoginPage from '../features/auth/pages/LoginPage'
 import { supabase } from '../shared/SupabaseClient'
 import type { Session } from '@supabase/supabase-js'
+import TaskList from '../features/tasks/pages/TaskList'
 
 function App() {
   const [session, setSession] = useState<Session | null>(null)
@@ -27,8 +28,7 @@ function App() {
         <p>ログイン済み: {session.user.email}</p>
         <button onClick={() => supabase.auth.signOut()}>logout</button>
 
-        {/* ここにタスク画面を置く */}
-        <div>Task page placeholder</div>
+        <TaskList />
       </div>
     </>
   )

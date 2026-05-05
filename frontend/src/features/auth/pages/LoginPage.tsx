@@ -29,8 +29,9 @@ function LoginPage() {
     <div className="login-container">
       <form className="login-form" onSubmit={handleSubmit}>
         <p className="form-row">
-          <span>Email</span>
+          <p className='login-label'>Email</p>
           <input
+            className='login-form'
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -39,8 +40,9 @@ function LoginPage() {
         </p>
 
         <p className="form-row">
-          <span>Password</span>
+          <p className='login-label'>Password</p>
           <input
+            className='login-form'
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
