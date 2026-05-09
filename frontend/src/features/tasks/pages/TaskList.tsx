@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { Task } from '../models/Task'
 import './App.css'
+import { supabase } from '../../../shared/SupabaseClient'
 
 function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([])
@@ -12,16 +13,26 @@ function TaskList() {
     setError(null)
 
     try {
-      const res = await fetch('http://localhost:8080/tasks')
-
-      if (!res.ok) {
-        throw new Error('failed to load tasks')
+      const { data } = await supabase.auth.getSession()
+      const token = data.session?.access_token
+      const headers = {
+        Authorization: `Bearer ${token}`,
       }
 
-      const data: Task[] = await res.json()
-      setTasks(data)
+      const res = await fetch('http://localhost:8080/tasks', { headers })
+
+      if (!res.ok) {
+        const body = await res.text()
+        console.log('status:', res.status)
+        console.log('body:', body)
+        throw new Error(`failed to load tasks: ${res.status}`)
+      }
+
+      const tasks: Task[] = await res.json()
+      setTasks(tasks)
     } catch (err) {
       setError('タスク一覧の取得に失敗しました')
+      console.log(err)
     } finally {
       setLoading(false)
     }

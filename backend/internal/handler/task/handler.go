@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	auth "github.com/koh5963/task-app/internal/auth"
 	taskUsecase "github.com/koh5963/task-app/internal/usecase/task"
 )
 
@@ -24,7 +25,12 @@ func (h *Handler) ListByUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
 
 	// 実際にはURLパラメータからユーザID取得？
-	userID := "9766788f-5e3f-43e8-82f9-60300632f4b7"
+	token, err := auth.UserIDFromContext(r.Context())
+	if err != nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+	userID := token
 
 	tasks, err := h.usecase.ListByUser(r.Context(), userID)
 	if err != nil {

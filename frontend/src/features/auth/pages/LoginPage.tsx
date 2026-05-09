@@ -28,7 +28,7 @@ function LoginPage() {
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleSubmit}>
-        <p className="form-row">
+        <div className="form-row">
           <p className='login-label'>Email</p>
           <input
             className='login-form'
@@ -37,9 +37,9 @@ function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </p>
+        </div>
 
-        <p className="form-row">
+        <div className="form-row">
           <p className='login-label'>Password</p>
           <input
             className='login-form'
@@ -48,7 +48,7 @@ function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </p>
+        </div>
 
         {error && <p className="error">{error}</p>}
 

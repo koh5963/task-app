@@ -7,6 +7,9 @@ services:
       - ./backend:/app
     environment:
       DATABASE_URL: postgres://${USER_NAME}:${USER_PASS}@db:5432/${DB_NAME}?sslmode=disable
+      SUPABASE_JWKS_URL: "https://${SUPABASE_PROJECT_ID}.supabase.co/auth/v1/.well-known/jwks.json"
+      SUPABASE_ISSUER: "https://${SUPABASE_PROJECT_ID}.supabase.co/auth/v1"
+      SUPABASE_AUDIENCE: "authenticated"
     depends_on:
       db:
         condition: service_healthy
