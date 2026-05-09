@@ -39,9 +39,22 @@ This is minimum specifications.
 
 ### Task Management form
 - Tasks registration.
+  - POST /tasks
+  - Returns a new list of tasks for the authenticated user.
 - Tasks update.
+  - PATCH /tasks/{id}
+  - Updates title, description, and status.
+  - Request body:
+    - title: string
+    - description: string
+    - status: TODO / DOING / DONE
+  - Returns only HTTP status code.
 - Tasks delete.
+  - DELETE /tasks/{id}
+  - Returns only HTTP statsu code
 - Tasks view in list.
+  - GET /tasks
+  - Returns a list of tasks for the authenticated user.
 
 #### Task Attributes
 - Title
