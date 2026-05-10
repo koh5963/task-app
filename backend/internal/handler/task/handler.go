@@ -78,6 +78,8 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Errorf("failed to delete task: %w", delErr).Error(), http.StatusInternalServerError)
 		return
 	}
+
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
