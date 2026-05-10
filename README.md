@@ -160,10 +160,10 @@ The backend verifies the JWT and uses the `sub` claim as the user ID.
 
 ## TODO
 
-- [×] Add task creation API (`POST /tasks`)
-- [×] Add task update API (`PATCH /tasks/{id}`)
-- [×] Add task delete API (`DELETE /tasks/{id}`)
-- [×] Connect create/update/delete from the frontend
+- [x] Add task creation API (`POST /tasks`)
+- [x] Add task update API (`PATCH /tasks/{id}`)
+- [x] Add task delete API (`DELETE /tasks/{id}`)
+- [x] Connect create/update/delete from the frontend
 - [ ] Improve loading and error messages
 - [ ] Improve UI styling
 - [ ] Add filtering by task status
