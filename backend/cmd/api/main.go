@@ -47,7 +47,10 @@ func main() {
 		w.Write([]byte("Hello World!:P"))
 	})
 
-	mux.Handle("/tasks", auth.Middleware(authenticator, http.HandlerFunc(handler.ListByUser)))
+	mux.Handle("GET /tasks", auth.Middleware(authenticator, http.HandlerFunc(handler.ListByUser)))
+	mux.Handle("POST /tasks", auth.Middleware(authenticator, http.HandlerFunc(handler.Create)))
+	mux.Handle("PATCH /tasks/{id}/{status}", auth.Middleware(authenticator, http.HandlerFunc(handler.Update)))
+	mux.Handle("DELETE /tasks/{id}", auth.Middleware(authenticator, http.HandlerFunc(handler.Delete)))
 
 	addr := ":8080"
 	log.Printf("Starting server on %s\n", addr)
@@ -59,11 +62,12 @@ func main() {
 
 func cors(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		origin := os.Getenv("FRONTEND_ORIGIN")
 		// Vite の開発サーバーを許可
-		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+		w.Header().Set("Access-Control-Allow-Origin", origin)
 
 		// 許可するHTTPメソッド
-		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS")
 
 		// Authorization を許可しないと Bearer token 付き fetch で落ちる
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")

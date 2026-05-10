@@ -68,21 +68,20 @@ func (r *Repository) ListByUser(ctx context.Context, userID string) ([]tasks.Tas
 	return taskList, nil
 }
 
-func (r *Repository) Create(ctx context.Context, t tasks.Task) error {
+func (r *Repository) Create(ctx context.Context, userID string, t tasks.Task) ([]tasks.Task, error) {
 	ctx, cancel := context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()
 
 	tx, errT := r.db.BeginTx(ctx, nil)
 	if errT != nil {
-		return fmt.Errorf("failed to open transaction: %w", errT)
+		return nil, fmt.Errorf("failed to open transaction: %w", errT)
 	}
 	defer tx.Rollback()
 
 	_, err := tx.ExecContext(ctx, `
 		INSERT INTO
 		tasks (
-		  id
-		  , user_id
+		  user_id
 		  , title
 		  , description
 		  , status
@@ -93,21 +92,20 @@ func (r *Repository) Create(ctx context.Context, t tasks.Task) error {
 			, $2
 			, $3
 			, $4
-			, $5
 			, NOW()
 			, NOW()
 		)
-	`, t.ID, t.UserID, t.Title, t.Description, t.Status)
+	`, userID, t.Title, t.Description, t.Status)
 
 	if err != nil {
-		return fmt.Errorf("failed to insert tasks table: %w", err)
+		return nil, fmt.Errorf("failed to insert tasks table: %w", err)
 	}
 
 	if err := tx.Commit(); err != nil {
-		return fmt.Errorf("failed to commit transaction: %w", err)
+		return nil, fmt.Errorf("failed to commit transaction: %w", err)
 	}
 
-	return nil
+	return r.ListByUser(ctx, userID)
 }
 
 func (r *Repository) UpdateStatus(ctx context.Context, id string, userID string, status string) error {

@@ -29,6 +29,48 @@ input.login-form {
   width: 20em;
 }
 
+.task-form {
+  width: 360px;
+  margin: 0 auto 24px;
+  padding: 16px;
+  background: #222;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.task-form h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.task-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.task-form-row label {
+  font-weight: bold;
+}
+
+.task-form-row input,
+.task-form-row select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #555;
+  box-sizing: border-box;
+}
+
+.task-list-section {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.error-message {
+  color: #ff7777;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -39,8 +81,25 @@ li {
   padding: 12px;
   margin: 8px 0;
   border-radius: 8px;
+  text-align: left;
 }
 
 button {
   margin-right: 8px;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.task-status {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.task-actions {
+  margin-top: 12px;
 }
